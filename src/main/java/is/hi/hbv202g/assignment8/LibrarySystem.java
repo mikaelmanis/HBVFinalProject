@@ -321,7 +321,7 @@ class LibrarySystem {
 
     public List<Lending> getLendings() {
         return lendings;
-
+    }
     /**
      * Returns a book borrowed by a user.
      *
