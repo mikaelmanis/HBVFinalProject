@@ -13,22 +13,48 @@ class LibrarySystem {
     private List<User> users;
     private List<Lending> lendings;
 
-    private static final String USERS_FILE = "users.csv";
+    private static final String STUDENTS_FILE = "students.csv";
+    private static final String FACULTY_FILE = "faculty.csv";
     private static final String BOOKS_FILE = "books.csv";
+    private static final String LENDINGS_FILE = "lendings.csv";
 
-    public void saveUsers() throws IOException {
+    public void saveStudents() throws IOException {
         List<String[]> data = new ArrayList<>();
         for (User user : users) {
-            data.add(new String[]{user.getName()});
+            if (user instanceof Student) {
+                data.add(new String[]{user.getName(), String.valueOf(((Student) user).isFeePaid())});
+            }
         }
-        CSVUtils.writeCSV(USERS_FILE, data);
+        CSVUtils.writeCSV(STUDENTS_FILE, data);
     }
 
-    public void loadUsers() throws IOException {
-        List<String[]> data = CSVUtils.readCSV(USERS_FILE);
+    public void loadStudents() throws IOException {
+        List<String[]> data = CSVUtils.readCSV(STUDENTS_FILE);
         users.clear();
         for (String[] row : data) {
-            users.add(new User(row[0]));
+            String name = row[0];
+            boolean feePaid = Boolean.parseBoolean(row[1]);
+            users.add(new Student(name, feePaid));
+        }
+    }
+
+    public void saveFaculty() throws IOException {
+        List<String[]> data = new ArrayList<>();
+        for (User user : users) {
+            if (user instanceof FacultyMember) {
+                data.add(new String[]{user.getName(), ((FacultyMember) user).getDepartment()});
+            }
+        }
+        CSVUtils.writeCSV(FACULTY_FILE, data);
+    }
+
+    public void loadFaculty() throws IOException {
+        List<String[]> data = CSVUtils.readCSV(FACULTY_FILE);
+        users.clear();
+        for (String[] row : data) {
+            String name = row[0];
+            String department = row[1];
+            users.add(new FacultyMember(name, department));
         }
     }
 
@@ -58,6 +84,29 @@ class LibrarySystem {
             }
         }
     }
+
+    public void saveLendings() throws IOException {
+        List<String[]> data = new ArrayList<>();
+        for (Lending lending : lendings) {
+            data.add(new String[]{lending.getBook().getTitle(), lending.getUser().getName(), lending.getDueDate().toString()});
+        }
+        CSVUtils.writeCSV(LENDINGS_FILE, data);
+    }
+
+    public void loadLendings() throws IOException, UserOrBookDoesNotExistException {
+        List<String[]> data = CSVUtils.readCSV(LENDINGS_FILE);
+        lendings.clear();
+        for (String[] row : data) {
+            String bookTitle = row[0];
+            String userName = row[1];
+            LocalDate dueDate = LocalDate.parse(row[2]);
+            Book book = findBookByTitle(bookTitle);
+            User user = findUserByName(userName);
+            if (book != null && user != null) {
+                lendings.add(new Lending(book, user));
+            }
+        }
+    }
     /**
      * Constructs a LibrarySystem with empty lists of books, users, and lendings.
      */
@@ -66,10 +115,14 @@ class LibrarySystem {
         users = new ArrayList<>();
         lendings = new ArrayList<>();
         try {
-            loadUsers();
+            loadStudents();
+            loadFaculty();
             loadBooks();
+            loadLendings();
         } catch (IOException e) {
             System.out.println("Error loading data: " + e.getMessage());
+        } catch (UserOrBookDoesNotExistException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -117,7 +170,7 @@ class LibrarySystem {
     public void addStudentUser(String name, boolean feePaid) {
         users.add(new Student(name, feePaid));
         try {
-            saveUsers();
+            saveStudents();
         } catch (IOException e) {
             System.out.println("Error saving users: " + e.getMessage());
         }
@@ -132,15 +185,22 @@ class LibrarySystem {
     public void addFacultyMemberUser(String name, String department) {
         users.add(new FacultyMember(name, department));
         try {
-            saveUsers();
+            saveFaculty();
         } catch (IOException e) {
             System.out.println("Error saving users: " + e.getMessage());
         }
     }
 
+    /**
+     * Retrieves all users in the library system.
+     */
     public void getUsers() {
         for (User user : users) {
-            System.out.println(user.getName());
+            if (user instanceof Student) {
+                System.out.println("Student: " + user.getName() + ", Fee Paid: " + ((Student) user).isFeePaid());
+            } else if (user instanceof FacultyMember) {
+                System.out.println("Faculty Member: " + user.getName() + ", Department: " + ((FacultyMember) user).getDepartment());
+            }
         }
     }
 
@@ -158,6 +218,12 @@ class LibrarySystem {
             }
         }
         throw new UserOrBookDoesNotExistException("Book " + title + " not found");
+    }
+
+    public void getBooks() {
+        for (Book book : books) {
+            System.out.println("Title: " + book.getTitle() + ", Authors: " + String.join(", ", book.getAuthors().stream().map(Author::getName).toList()));
+        }
     }
 
     /**
@@ -188,6 +254,11 @@ class LibrarySystem {
             throw new UserOrBookDoesNotExistException("Book " + book.getTitle() + " or user " + user.getName() + " not found");
         }
         lendings.add(new Lending(book, user));
+        try {
+            saveLendings();
+        } catch (IOException e) {
+            System.out.println("Error saving lendings: " + e.getMessage());
+        }
     }
 
     /**
@@ -206,6 +277,11 @@ class LibrarySystem {
             if (lending.getBook().equals(book) && lending.getUser().equals(facultyMember)) {
                 lending.setDueDate(newDueDate);
             }
+        }
+        try {
+            saveLendings();
+        } catch (IOException e) {
+            System.out.println("Error saving lendings: " + e.getMessage());
         }
     }
 
@@ -230,9 +306,15 @@ class LibrarySystem {
         for (Lending lending : lendings) {
             if (lending.getBook().equals(book) && lending.getUser().equals(user)) {
                 lendings.remove(lending);
+                try {
+                    saveLendings();
+                } catch (IOException e) {
+                    System.out.println("Error saving lendings: " + e.getMessage());
+                }
                 return;
             }
         }
+
         throw new UserOrBookDoesNotExistException("Book " + book.getTitle() + " or user " + user.getName() + " not found");
     }
 }

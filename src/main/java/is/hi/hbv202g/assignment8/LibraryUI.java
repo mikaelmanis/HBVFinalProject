@@ -53,7 +53,8 @@ public class LibraryUI {
         System.out.println("Book Menu:");
         System.out.println("1. Add Book with Title and Author List");
         System.out.println("2. Add Book with Title and Single Author");
-        System.out.println("3. Back to Main Menu");
+        System.out.println("3. List Books");
+        System.out.println("4. Back to Main Menu");
         System.out.print("Choose an option: ");
     }
 
@@ -161,6 +162,7 @@ public class LibraryUI {
             case 1:
                 System.out.print("Enter book title: ");
                 String bookTitle = scanner.nextLine();
+                System.out.print("Enter author names (comma-separated): ");
                 String authorNames = scanner.nextLine();
                 String[] authorsArray = authorNames.split(",");
                 List<Author> authors = new ArrayList<>();
@@ -189,6 +191,8 @@ public class LibraryUI {
                 }
                 break;
             case 3:
+                System.out.println("Listing all books:");
+                librarySystem.getBooks();
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");

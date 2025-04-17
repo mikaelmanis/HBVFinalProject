@@ -4,7 +4,7 @@ package is.hi.hbv202g.assignment8;
 /**
  * Represents a user in the library system.
  */
-class User {
+abstract class User {
     protected String name;
 
     /**

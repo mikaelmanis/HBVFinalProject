@@ -14,11 +14,6 @@ public class MainTest
     }
 
     @Test
-    public void shouldBePossibleToInstantiateUser()
-    {
-        new User("John Doe");
-    }
-    @Test
     public void shouldBePossibleToInstantiateAuthor()
     {
         new Author("John Doe");
