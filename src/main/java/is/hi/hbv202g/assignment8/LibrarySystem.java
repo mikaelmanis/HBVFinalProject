@@ -18,6 +18,11 @@ class LibrarySystem {
     private static final String BOOKS_FILE = "books.csv";
     private static final String LENDINGS_FILE = "lendings.csv";
 
+    /**
+     * Saves the list of student users to a CSV file.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     public void saveStudents() throws IOException {
         List<String[]> data = new ArrayList<>();
         for (User user : users) {
@@ -28,6 +33,11 @@ class LibrarySystem {
         CSVUtils.writeCSV(STUDENTS_FILE, data);
     }
 
+    /**
+     * Loads the list of student users from a CSV file.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     public void loadStudents() throws IOException {
         List<String[]> data = CSVUtils.readCSV(STUDENTS_FILE);
         users.clear();
@@ -38,6 +48,11 @@ class LibrarySystem {
         }
     }
 
+    /**
+     * Saves the list of faculty users to a CSV file.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     public void saveFaculty() throws IOException {
         List<String[]> data = new ArrayList<>();
         for (User user : users) {
@@ -48,6 +63,11 @@ class LibrarySystem {
         CSVUtils.writeCSV(FACULTY_FILE, data);
     }
 
+    /**
+     * Loads the list of faculty users from a CSV file.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     public void loadFaculty() throws IOException {
         List<String[]> data = CSVUtils.readCSV(FACULTY_FILE);
         users.clear();
@@ -58,6 +78,11 @@ class LibrarySystem {
         }
     }
 
+    /**
+     * Saves the list of books to a CSV file.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     public void saveBooks() throws IOException {
         List<String[]> data = new ArrayList<>();
         for (Book book : books) {
@@ -67,6 +92,11 @@ class LibrarySystem {
         CSVUtils.writeCSV(BOOKS_FILE, data);
     }
 
+    /**
+     * Loads the list of books from a CSV file.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     public void loadBooks() throws IOException {
         List<String[]> data = CSVUtils.readCSV(BOOKS_FILE);
         books.clear();
@@ -85,6 +115,11 @@ class LibrarySystem {
         }
     }
 
+    /**
+     * Saves the list of lendings to a CSV file.
+     *
+     * @throws IOException if an I/O error occurs
+     */
     public void saveLendings() throws IOException {
         List<String[]> data = new ArrayList<>();
         for (Lending lending : lendings) {
@@ -93,6 +128,12 @@ class LibrarySystem {
         CSVUtils.writeCSV(LENDINGS_FILE, data);
     }
 
+    /**
+     * Loads the list of lendings from a CSV file.
+     *
+     * @throws IOException if an I/O error occurs
+     * @throws UserOrBookDoesNotExistException if a user or book is not found
+     */
     public void loadLendings() throws IOException, UserOrBookDoesNotExistException {
         List<String[]> data = CSVUtils.readCSV(LENDINGS_FILE);
         lendings.clear();
@@ -107,6 +148,7 @@ class LibrarySystem {
             }
         }
     }
+
     /**
      * Constructs a LibrarySystem with empty lists of books, users, and lendings.
      */
@@ -279,7 +321,6 @@ class LibrarySystem {
 
     public List<Lending> getLendings() {
         return lendings;
-    }
 
     /**
      * Returns a book borrowed by a user.
