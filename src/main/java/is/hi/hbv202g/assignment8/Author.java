@@ -31,5 +31,6 @@ class Author {
      * @param name the new name of the author
      */
     public void setName(String name) {
+        this.name = name;
     }
 }

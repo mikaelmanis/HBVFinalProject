@@ -14,6 +14,7 @@ class User {
      */
     public User(String name) {
         this.name = name;
+
     }
 
     /**
@@ -31,5 +32,6 @@ class User {
      * @param name the new name of the user
      */
     public void setName(String name) {
+        this.name = name;
     }
 }

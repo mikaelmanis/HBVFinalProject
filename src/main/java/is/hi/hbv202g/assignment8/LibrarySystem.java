@@ -1,5 +1,6 @@
 package is.hi.hbv202g.assignment8;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,51 @@ class LibrarySystem {
     private List<User> users;
     private List<Lending> lendings;
 
+    private static final String USERS_FILE = "users.csv";
+    private static final String BOOKS_FILE = "books.csv";
+
+    public void saveUsers() throws IOException {
+        List<String[]> data = new ArrayList<>();
+        for (User user : users) {
+            data.add(new String[]{user.getName()});
+        }
+        CSVUtils.writeCSV(USERS_FILE, data);
+    }
+
+    public void loadUsers() throws IOException {
+        List<String[]> data = CSVUtils.readCSV(USERS_FILE);
+        users.clear();
+        for (String[] row : data) {
+            users.add(new User(row[0]));
+        }
+    }
+
+    public void saveBooks() throws IOException {
+        List<String[]> data = new ArrayList<>();
+        for (Book book : books) {
+            String authors = String.join(";", book.getAuthors().stream().map(Author::getName).toList());
+            data.add(new String[]{book.getTitle(), authors});
+        }
+        CSVUtils.writeCSV(BOOKS_FILE, data);
+    }
+
+    public void loadBooks() throws IOException {
+        List<String[]> data = CSVUtils.readCSV(BOOKS_FILE);
+        books.clear();
+        for (String[] row : data) {
+            String title = row[0];
+            String[] authorNames = row[1].split(";");
+            List<Author> authors = new ArrayList<>();
+            for (String name : authorNames) {
+                authors.add(new Author(name));
+            }
+            try {
+                books.add(new Book(title, authors));
+            } catch (EmptyAuthorListException e) {
+                System.out.println("Error loading book: " + e.getMessage());
+            }
+        }
+    }
     /**
      * Constructs a LibrarySystem with empty lists of books, users, and lendings.
      */
@@ -19,6 +65,12 @@ class LibrarySystem {
         books = new ArrayList<>();
         users = new ArrayList<>();
         lendings = new ArrayList<>();
+        try {
+            loadUsers();
+            loadBooks();
+        } catch (IOException e) {
+            System.out.println("Error loading data: " + e.getMessage());
+        }
     }
 
     /**
@@ -28,11 +80,16 @@ class LibrarySystem {
      * @param authors the list of authors
      * @throws EmptyAuthorListException if the author list is empty
      */
-    public void addBookWithTitleAndAuthorList(String title, List<Author> authors) throws EmptyAuthorListException {
+    public void addBookWithTitleAndAuthorList(String title, List<Author> authors) throws EmptyAuthorListException, IOException {
         if (authors.isEmpty()) {
             throw new EmptyAuthorListException("Author list cannot be empty.");
         }
         books.add(new Book(title, authors));
+        try {
+            saveBooks();
+        } catch (IOException e) {
+            System.out.println("Error saving books: " + e.getMessage());
+        }
     }
 
     /**
@@ -44,6 +101,11 @@ class LibrarySystem {
      */
     public void addBookWithTitleAndNameOfSingleAuthor(String title, String authorName) throws EmptyAuthorListException {
         books.add(new Book(title, authorName));
+        try {
+            saveBooks();
+        } catch (IOException e) {
+            System.out.println("Error saving books: " + e.getMessage());
+        }
     }
 
     /**
@@ -54,6 +116,11 @@ class LibrarySystem {
      */
     public void addStudentUser(String name, boolean feePaid) {
         users.add(new Student(name, feePaid));
+        try {
+            saveUsers();
+        } catch (IOException e) {
+            System.out.println("Error saving users: " + e.getMessage());
+        }
     }
 
     /**
@@ -64,6 +131,17 @@ class LibrarySystem {
      */
     public void addFacultyMemberUser(String name, String department) {
         users.add(new FacultyMember(name, department));
+        try {
+            saveUsers();
+        } catch (IOException e) {
+            System.out.println("Error saving users: " + e.getMessage());
+        }
+    }
+
+    public void getUsers() {
+        for (User user : users) {
+            System.out.println(user.getName());
+        }
     }
 
     /**
@@ -128,6 +206,12 @@ class LibrarySystem {
             if (lending.getBook().equals(book) && lending.getUser().equals(facultyMember)) {
                 lending.setDueDate(newDueDate);
             }
+        }
+    }
+
+    public void getLendings() {
+        for (Lending lending : lendings) {
+            System.out.println("Book: " + lending.getBook().getTitle() + ", User: " + lending.getUser().getName() + ", Due Date: " + lending.getDueDate());
         }
     }
 

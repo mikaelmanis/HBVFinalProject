@@ -15,6 +15,8 @@ public class Main {
      * @throws EmptyAuthorListException        if an attempt is made to add a book with an empty author list
      */
     public static void main(String[] args) throws UserOrBookDoesNotExistException, EmptyAuthorListException {
-        LibrarySystem myLibrarySystem = new LibrarySystem();
+
+        LibraryUI userInterface = new LibraryUI();
+        userInterface.start();
     }
 }
