@@ -133,7 +133,16 @@ public class LibraryUI {
                 break;
             case 3:
                 System.out.println("Listing all users:");
-                librarySystem.getUsers();
+                List<User> users = librarySystem.getUsers();
+                for (User user : users) {
+                    if (user instanceof Student) {
+                        System.out.println("Student: " + user.getName() +
+                                " (Fee Paid: " + ((Student) user).isFeePaid() + ")");
+                    } else if (user instanceof FacultyMember) {
+                        System.out.println("Faculty: " + user.getName() +
+                                " (Department: " + ((FacultyMember) user).getDepartment() + ")");
+                    }
+                }
                 break;
             case 4:
                 System.out.println("Returning to Main Menu.");

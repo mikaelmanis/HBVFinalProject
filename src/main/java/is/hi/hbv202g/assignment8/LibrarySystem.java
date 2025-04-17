@@ -194,14 +194,8 @@ class LibrarySystem {
     /**
      * Retrieves all users in the library system.
      */
-    public void getUsers() {
-        for (User user : users) {
-            if (user instanceof Student) {
-                System.out.println("Student: " + user.getName() + ", Fee Paid: " + ((Student) user).isFeePaid());
-            } else if (user instanceof FacultyMember) {
-                System.out.println("Faculty Member: " + user.getName() + ", Department: " + ((FacultyMember) user).getDepartment());
-            }
-        }
+    public List<User> getUsers() {
+        return users;
     }
 
     /**
@@ -220,10 +214,8 @@ class LibrarySystem {
         throw new UserOrBookDoesNotExistException("Book " + title + " not found");
     }
 
-    public void getBooks() {
-        for (Book book : books) {
-            System.out.println("Title: " + book.getTitle() + ", Authors: " + String.join(", ", book.getAuthors().stream().map(Author::getName).toList()));
-        }
+    public List<Book> getBooks() {
+        return books;
     }
 
     /**
@@ -285,10 +277,8 @@ class LibrarySystem {
         }
     }
 
-    public void getLendings() {
-        for (Lending lending : lendings) {
-            System.out.println("Book: " + lending.getBook().getTitle() + ", User: " + lending.getUser().getName() + ", Due Date: " + lending.getDueDate());
-        }
+    public List<Lending> getLendings() {
+        return lendings;
     }
 
     /**
