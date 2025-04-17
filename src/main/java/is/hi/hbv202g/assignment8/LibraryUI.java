@@ -5,17 +5,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * The user interface for the Library System.
+ * Provides menus and handles user input for managing users, books, and lendings.
+ */
 public class LibraryUI {
     private LibrarySystem librarySystem;
     private Scanner scanner;
     private boolean running;
 
-
+    /**
+     * Constructs a LibraryUI and initializes the LibrarySystem and Scanner.
+     */
     public LibraryUI() {
         librarySystem = new LibrarySystem();
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * Displays the main menu of the library system.
+     */
     public void startMenu() {
         System.out.println("Welcome to the Library System!");
         System.out.println("1. User Menu");
@@ -25,6 +34,9 @@ public class LibraryUI {
         System.out.print("Choose an option: ");
     }
 
+    /**
+     * Displays the user menu for managing users.
+     */
     public void userMenu() {
         System.out.println("User Menu:");
         System.out.println("1. Add Student User");
@@ -34,6 +46,9 @@ public class LibraryUI {
         System.out.print("Choose an option: ");
     }
 
+    /**
+     * Displays the book menu for managing books.
+     */
     public void bookMenu() {
         System.out.println("Book Menu:");
         System.out.println("1. Add Book with Title and Author List");
@@ -42,6 +57,9 @@ public class LibraryUI {
         System.out.print("Choose an option: ");
     }
 
+    /**
+     * Displays the lending menu for managing lendings.
+     */
     public void lendingMenu() {
         System.out.println("Lending Menu:");
         System.out.println("1. Lend Book");
@@ -51,13 +69,18 @@ public class LibraryUI {
         System.out.print("Choose an option: ");
     }
 
+    /**
+     * Starts the library system and handles the main menu navigation.
+     *
+     * @throws UserOrBookDoesNotExistException if a user or book is not found during operations
+     */
     public void start() throws UserOrBookDoesNotExistException {
         running = true;
         while (running) {
             clearConsole();
             startMenu();
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
             switch (choice) {
                 case 1:
                     clearConsole();
@@ -84,9 +107,12 @@ public class LibraryUI {
         }
     }
 
+    /**
+     * Handles user menu options based on user input.
+     */
     private void handleUserMenu() {
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         switch (choice) {
             case 1:
                 System.out.print("Enter student name: ");
@@ -117,19 +143,24 @@ public class LibraryUI {
         }
     }
 
+    /**
+     * Clears the console output.
+     */
     private void clearConsole() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
 
+    /**
+     * Handles book menu options based on user input.
+     */
     private void handleBookMenu() {
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         switch (choice) {
             case 1:
                 System.out.print("Enter book title: ");
                 String bookTitle = scanner.nextLine();
-                System.out.print("Enter author names (comma-separated): ");
                 String authorNames = scanner.nextLine();
                 String[] authorsArray = authorNames.split(",");
                 List<Author> authors = new ArrayList<>();
@@ -164,9 +195,14 @@ public class LibraryUI {
         }
     }
 
+    /**
+     * Handles lending menu options based on user input.
+     *
+     * @throws UserOrBookDoesNotExistException if a user or book is not found during operations
+     */
     public void handleLendingMenu() throws UserOrBookDoesNotExistException {
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         switch (choice) {
             case 1:
                 System.out.print("Enter user name: ");

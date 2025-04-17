@@ -1,13 +1,20 @@
-# HBV202GAssignment8
-A Maven project skeleton. The provided Maven POM sets the Java version to 17.
+# Library Management System
 
-All classes need to be located in Java package `is.hi.hbv202g.assignment8`.
+This is a Java-based Library Management System developed as part of the course **HBV202G: Software Design and Construction** at Háskóli Íslands.
 
-Class and method names of the submitted solution need to be **exactly** the same 
-as in the UML class diagram in the assignment PDF. 
+## About
 
-If you like, you can import from project directory `UML` the file 
-`library_system.uxf` into the online UML editor https://www.umletino.com/ 
-and copy/paste from there class and method names: click on a class and then, 
-you can copy from the `properties` window on the right hand side class 
-and method names.
+This project follows a Maven project structure and is implemented in **Java 17**. All classes are located in the `is.hi.hbv202g.assignment8` package.
+
+The system allows:
+- Adding books with authors
+- Registering student and faculty users
+- Borrowing, returning, and extending lending of books
+- Managing lending periods with support for different user types
+
+## How to Build
+
+To build the project using Maven, run:
+
+```bash
+mvn clean package
