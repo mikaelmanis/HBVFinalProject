@@ -64,7 +64,7 @@ The generated documentation can be found in `target/site/index.html`.
 
 ### UML Class Diagram
 A UML class diagram illustrating the object-oriented design is included in the project.  
-You can view it [here](UML/UMLLibrarySystem.PNG).
+![UML Diagram](UML/UMLLibrarySystem.PNG).
 
 ---
 
