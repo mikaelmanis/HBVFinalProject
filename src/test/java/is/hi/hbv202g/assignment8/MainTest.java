@@ -44,19 +44,20 @@ public class MainTest {
     @Test
     public void shouldAddBookWithSingleAuthor() throws EmptyAuthorListException {
         LibrarySystem librarySystem = new LibrarySystem();
-        Integer oldSize = librarySystem.getBooks().size();
+        int oldSize = librarySystem.getBooks().size();
         librarySystem.addBookWithTitleAndNameOfSingleAuthor("Book Title", "John Doe");
-        assertEquals(Optional.of(oldSize), librarySystem.getBooks().size());
+        assertEquals(oldSize + 1, librarySystem.getBooks().size());
     }
 
     @Test
     public void shouldAddBookWithMultipleAuthors() throws EmptyAuthorListException, IOException {
         LibrarySystem librarySystem = new LibrarySystem();
+        int oldSize = librarySystem.getBooks().size();
         List<Author> authors = new ArrayList<>();
         authors.add(new Author("Author One"));
         authors.add(new Author("Author Two"));
         librarySystem.addBookWithTitleAndAuthorList("Multi-Author Book", authors);
-        assertEquals(1, librarySystem.getBooks().size());
+        assertEquals(oldSize + 1, librarySystem.getBooks().size());
     }
 
     @Test
@@ -94,6 +95,7 @@ public class MainTest {
         User user = librarySystem.findUserByName("Alice");
         Book book = librarySystem.findBookByTitle("Book Title");
         librarySystem.borrowBook(user, book);
+        assertEquals(1, librarySystem.getLendings().size());
         librarySystem.returnBook(user, book);
         assertEquals(0, librarySystem.getLendings().size());
     }

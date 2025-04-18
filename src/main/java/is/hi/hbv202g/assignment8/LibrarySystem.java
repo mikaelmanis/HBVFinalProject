@@ -40,7 +40,6 @@ class LibrarySystem {
      */
     public void loadStudents() throws IOException {
         List<String[]> data = CSVUtils.readCSV(STUDENTS_FILE);
-        users.clear();
         for (String[] row : data) {
             String name = row[0];
             boolean feePaid = Boolean.parseBoolean(row[1]);
@@ -70,7 +69,6 @@ class LibrarySystem {
      */
     public void loadFaculty() throws IOException {
         List<String[]> data = CSVUtils.readCSV(FACULTY_FILE);
-        users.clear();
         for (String[] row : data) {
             String name = row[0];
             String department = row[1];
@@ -164,7 +162,7 @@ class LibrarySystem {
         } catch (IOException e) {
             System.out.println("Error loading data: " + e.getMessage());
         } catch (UserOrBookDoesNotExistException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error loading lendings: " + e.getMessage());
         }
     }
 
@@ -214,7 +212,7 @@ class LibrarySystem {
         try {
             saveStudents();
         } catch (IOException e) {
-            System.out.println("Error saving users: " + e.getMessage());
+            System.out.println("Error saving students: " + e.getMessage());
         }
     }
 
