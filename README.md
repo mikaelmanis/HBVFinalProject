@@ -64,12 +64,12 @@ The generated documentation can be found in `target/site/index.html`.
 
 ### UML Class Diagram
 A UML class diagram illustrating the object-oriented design is included in the project.  
-You can view it [here](src/site/markdown/uml-class-diagram.md).
+You can view it [here](UML/UMLLibrarySystem.PNG).
 
 ---
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE.txt) file for details.
 
 ---
 
