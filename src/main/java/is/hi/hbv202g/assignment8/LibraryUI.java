@@ -201,7 +201,10 @@ public class LibraryUI {
                 break;
             case 3:
                 System.out.println("Listing all books:");
-                librarySystem.getBooks();
+                List<Book> books = librarySystem.getBooks();
+                for (Book book : books) {
+                    System.out.println("Title: " + book.getTitle() + ", Authors: " + book.getAuthors());
+                }
                 break;
             default:
                 System.out.println("Invalid choice. Please try again.");
@@ -243,7 +246,12 @@ public class LibraryUI {
                 break;
             case 3:
                 System.out.println("Listing all lendings:");
-                librarySystem.getLendings();
+                List<Lending> lendings = librarySystem.getLendings();
+                for (Lending lending : lendings) {
+                    System.out.println("User: " + lending.getUser().getName() +
+                            ", Book: " + lending.getBook().getTitle() +
+                            ", Date: " + lending.getDueDate());
+                }
                 break;
             case 4:
                 break;

@@ -30,15 +30,17 @@ public class MainTest {
     @Test
     public void shouldAddStudentUserToLibrarySystem() {
         LibrarySystem librarySystem = new LibrarySystem();
+        long oldSize = librarySystem.getUsers().size();
         librarySystem.addStudentUser("Alice", true);
-        assertEquals(1, librarySystem.getUsers().size());
+        assertEquals(oldSize+1, librarySystem.getUsers().size());
     }
 
     @Test
     public void shouldAddFacultyMemberToLibrarySystem() {
         LibrarySystem librarySystem = new LibrarySystem();
+        long oldSize = librarySystem.getUsers().size();
         librarySystem.addFacultyMemberUser("Dr. Smith", "Computer Science");
-        assertEquals(1, librarySystem.getUsers().size());
+        assertEquals(oldSize+1, librarySystem.getUsers().size());
     }
 
     @Test
@@ -83,8 +85,9 @@ public class MainTest {
         librarySystem.addBookWithTitleAndNameOfSingleAuthor("Book Title", "John Doe");
         User user = librarySystem.findUserByName("Alice");
         Book book = librarySystem.findBookByTitle("Book Title");
+        long oldSize = librarySystem.getLendings().size();
         librarySystem.borrowBook(user, book);
-        assertEquals(1, librarySystem.getLendings().size());
+        assertEquals(oldSize+1, librarySystem.getLendings().size());
     }
 
     @Test
@@ -94,10 +97,11 @@ public class MainTest {
         librarySystem.addBookWithTitleAndNameOfSingleAuthor("Book Title", "John Doe");
         User user = librarySystem.findUserByName("Alice");
         Book book = librarySystem.findBookByTitle("Book Title");
+        long oldSize = librarySystem.getLendings().size();
         librarySystem.borrowBook(user, book);
-        assertEquals(1, librarySystem.getLendings().size());
+        assertEquals(oldSize + 1, librarySystem.getLendings().size());
         librarySystem.returnBook(user, book);
-        assertEquals(0, librarySystem.getLendings().size());
+        assertEquals(oldSize, librarySystem.getLendings().size());
     }
 
     @Test
