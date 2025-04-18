@@ -1,4 +1,4 @@
-package is.hi.hbv202g.assignment8;
+package is.hi.hbv202g.finalProject;
 
 /**
  * Exception thrown when an operation involving a list of authors is attempted

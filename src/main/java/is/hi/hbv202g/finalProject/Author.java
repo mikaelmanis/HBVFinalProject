@@ -1,5 +1,5 @@
 
-package is.hi.hbv202g.assignment8;
+package is.hi.hbv202g.finalProject;
 
 /**
  * Represents an author with a name.

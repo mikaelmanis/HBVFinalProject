@@ -1,6 +1,4 @@
-package is.hi.hbv202g.assignment8;
-
-import java.time.LocalDate;
+package is.hi.hbv202g.finalProject;
 
 /**
  * The entry point of the library system application.

@@ -18,7 +18,7 @@ The project also emphasizes the use of **object-oriented design principles**, **
 ---
 
 ## Project Structure
-The project follows a **Maven** structure and is implemented in **Java 17**. All classes are located in the `is.hi.hbv202g.assignment8` package.
+The project follows a **Maven** structure and is implemented in **Java 17**. All classes are located in the `is.hi.hbv202g.finalProject` package.
 
 ### Key Features
 1. **Book Management**
@@ -45,11 +45,19 @@ To build the project using Maven, run:
 ```bash
 mvn clean package
 ```
+or 
+```bash
+./build.sh
+```
 
 ### Run
-To execute the main method, use:
+To execute the main method you first have to build the project as mentioned above, then use:
 ```bash
-java -cp target/library-management-system-1.0-SNAPSHOT.jar is.hi.hbv202g.assignment8.Main
+java -jar "target/FinalProject-1.0-SNAPSHOT-jar-with-dependencies.jar"
+```
+or
+```bash
+./run.sh
 ```
 
 ---

@@ -1,4 +1,4 @@
-package is.hi.hbv202g.assignment8;
+package is.hi.hbv202g.finalProject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,7 +78,6 @@ public class LibraryUI {
     public void start() throws UserOrBookDoesNotExistException {
         running = true;
         while (running) {
-            clearConsole();
             startMenu();
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -203,7 +202,11 @@ public class LibraryUI {
                 System.out.println("Listing all books:");
                 List<Book> books = librarySystem.getBooks();
                 for (Book book : books) {
-                    System.out.println("Title: " + book.getTitle() + ", Authors: " + book.getAuthors());
+                    System.out.println("Title: " + book.getTitle() + ", Authors: ");
+                    List<Author> bookAuthors = book.getAuthors();
+                    for (Author author : bookAuthors){
+                        System.out.println(author.getName());
+                    }
                 }
                 break;
             default:

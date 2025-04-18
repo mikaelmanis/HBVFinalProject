@@ -1,4 +1,4 @@
-package is.hi.hbv202g.assignment8;
+package is.hi.hbv202g.finalProject;
 
 /**
  * Represents a faculty member who is a user with an associated department.

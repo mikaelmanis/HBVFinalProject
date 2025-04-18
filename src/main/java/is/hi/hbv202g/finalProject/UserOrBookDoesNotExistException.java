@@ -1,4 +1,4 @@
-package is.hi.hbv202g.assignment8;
+package is.hi.hbv202g.finalProject;
 
 /**
  * Exception thrown when a user or book does not exist in the library system.

@@ -1,4 +1,4 @@
-package is.hi.hbv202g.assignment8;
+package is.hi.hbv202g.finalProject;
 
 /**
  * Represents a student user in the library system.
