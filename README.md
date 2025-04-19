@@ -85,7 +85,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.txt) f
 - The project supports **JUnit testing** for all major functionalities.
 - The `pom.xml` file is configured to generate a JAR file for easy distribution.
 - The UML class diagram highlights the use of design patterns and associations between classes.
-```
 
 
 
