@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>HBV202G FinalProject</name>
+    <description>Final project for HBV202G</description>
     <licenses>
         <license>
             <name>MIT License</name>
